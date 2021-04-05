@@ -1,0 +1,73 @@
+{
+	"id": "7218043b-ffd1-a8c6-e782-57f2b5268c30",
+	"name": "loginjwt",
+	"description": "",
+	"order": [
+		"895234b3-3e21-0dea-fa33-8374174f42c3",
+		"3d2ee162-c030-751b-7cbe-5966f55b1388"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1617583116014,
+	"owner": "10357672",
+	"public": false,
+	"requests": [
+		{
+			"id": "3d2ee162-c030-751b-7cbe-5966f55b1388",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:3636/login",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1617583606394,
+			"name": "login (get token)",
+			"description": "",
+			"collectionId": "7218043b-ffd1-a8c6-e782-57f2b5268c30",
+			"responses": [],
+			"rawModeData": "{\n\t\"name\" : \"nina\",\n\t\"password\" : \"admin\"\n}"
+		},
+		{
+			"id": "895234b3-3e21-0dea-fa33-8374174f42c3",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pbmFAZ21haWwuY29tIiwiaWQiOjEsIm5hbWUiOiJuaW5hIn0.5eLnhGjn9UpA11kK5yrXrrpWPzEbciK01uIFZjOwKMc\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5pbmFAZ21haWwuY29tIiwiaWQiOjEsIm5hbWUiOiJuaW5hIn0.5eLnhGjn9UpA11kK5yrXrrpWPzEbciK01uIFZjOwKMc",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:3636/getprofile",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1617583136590,
+			"name": "get profile",
+			"description": "",
+			"collectionId": "7218043b-ffd1-a8c6-e782-57f2b5268c30",
+			"responses": []
+		}
+	]
+}

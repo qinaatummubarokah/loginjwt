@@ -16,7 +16,7 @@ func NewRouter() *echo.Echo {
 
 	// e.GET("/account/:account_number", controller.GetAccount)
 	e.POST("/login", controllers.GetToken)
-	e.GET("/getuser", controllers.GetProfile)
+	e.GET("/getprofile", controllers.GetProfile)
 	
 	return e
 }

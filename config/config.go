@@ -7,9 +7,6 @@ import (
 	"github.com/jmoiron/sqlx"
 
 )
-	// "database/sql"
-	// _ "github.com/go-sql-driver/mysql"
-	// "github.com/jmoiron/sqlx"
 
 // JWTSecret
 var JWTSecret string = "SL6ANV4cMfu2cBI240iV0xYLgv6RxUIh"

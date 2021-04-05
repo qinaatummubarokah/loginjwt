@@ -42,10 +42,10 @@ func GetToken(c echo.Context) error {
 			}
 			return  c.JSON(status, tokenString)
 		}else{
-			return echo.NewHTTPError(status, "Password tidak sesuai")
+			return echo.NewHTTPError(status, "passwords do not match")
 		}
 	}else{
-		return echo.NewHTTPError(status, "Account not found")
+		return echo.NewHTTPError(status, "account not found")
 	}
 }
 
@@ -69,12 +69,12 @@ func GetProfile(c echo.Context) error {
 	})
 	if err != nil {
 		log.Println("err: ",err)
-		return echo.NewHTTPError(http.StatusBadRequest, "Invalid token")
+		return echo.NewHTTPError(http.StatusBadRequest, "invalid token")
 	}
 
 	claims , ok := token.Claims.(jwt.MapClaims)
 	if !ok || !token.Valid {
-		return echo.NewHTTPError(http.StatusBadRequest, "Invalid token")
+		return echo.NewHTTPError(http.StatusBadRequest, "invalid token")
 	}
 	
 	var profile models.Profile
