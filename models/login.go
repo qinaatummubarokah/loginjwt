@@ -36,3 +36,65 @@ func GetUser(c *User, id string) int {
 	}
 	return http.StatusOK
 }
+
+func CreateUser(params map[string]string) int {
+	query := "INSERT INTO user("
+	// Get params
+	var fields, values string
+	i := 0
+	for key, value := range params {
+		fields += "`" + key + "`"
+		values += "'" + value + "'"
+		if (len(params) - 1) > i {
+			fields += ", "
+			values += ", "
+		}
+		i++
+	}
+	// Combile params to build query
+	query += fields + ") VALUES(" + values + ")"
+	log.Println(query)
+
+	tx, err := config.Db.Begin()
+	if err != nil {
+		log.Println(err)
+		return http.StatusBadGateway
+	}
+	_, err = tx.Exec(query)
+	tx.Commit()
+	if err != nil {
+		log.Println(err)
+		return http.StatusBadRequest
+	}
+	return http.StatusOK
+}
+
+func UpdateUser(params map[string]string) int {
+	query := "UPDATE user SET "
+	// Get params
+	i := 0
+	for key, value := range params {
+		if key != "id" {
+			query += "`" + key + "`" + " = '" + value + "'"
+			if (len(params) - 2) > i {
+				query += ", "
+			}
+			i++
+		}
+	}
+	query += " WHERE id = '" + params["id"] + "'"
+	log.Println(query)
+
+	tx, err := config.Db.Begin()
+	if err != nil {
+		log.Println(err)
+		return http.StatusBadGateway
+	}
+	_, err = tx.Exec(query)
+	tx.Commit()
+	if err != nil {
+		log.Println(err)
+		return http.StatusBadRequest
+	}
+	return http.StatusOK
+}

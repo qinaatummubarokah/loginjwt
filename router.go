@@ -14,9 +14,10 @@ func NewRouter() *echo.Echo {
 	// Initialize main database
 	config.Db = config.Connect()
 
-	// e.GET("/account/:account_number", controller.GetAccount)
 	e.POST("/login", controllers.GetToken)
 	e.GET("/getprofile", controllers.GetProfile)
+	e.POST("/register", controllers.Register)
+	e.PUT("/updateuser", controllers.UpdateUser)
 	
 	return e
 }

@@ -76,10 +76,78 @@ func GetProfile(c echo.Context) error {
 	if !ok || !token.Valid {
 		return echo.NewHTTPError(http.StatusBadRequest, "invalid token")
 	}
-	
+	log.Println("claims: ",claims)
 	var profile models.Profile
 	profile.Name = claims["name"].(string)
 	profile.Email = claims["email"].(string)
 
 	return echo.NewHTTPError(http.StatusBadRequest, profile)
+}
+
+func Register(c echo.Context) error {
+	params := make(map[string]string)
+	err := json.NewDecoder(c.Request().Body).Decode(&params)
+	if err != nil {
+		return err
+	}
+
+	if params["name"] == "" || params["password"] == "" {
+		return echo.NewHTTPError(http.StatusBadRequest, "nama dan password tidak boleh kosong")
+	}
+	status := models.CreateUser(params)
+	return echo.NewHTTPError(status)
+}
+
+func UpdateUser(c echo.Context) error {
+	params := make(map[string]string)
+
+	// Get parameter name
+	name := c.FormValue("name")
+	if name != "" {
+		params["name"] = name
+	}
+
+	// Get parameter age
+	password := c.FormValue("password")
+	if password != "" {
+		params["password"] = password
+	}
+
+	// Get parameter grade
+	email := c.FormValue("email")
+	if email != "" {
+		params["email"] = email
+	}
+
+	request := c.Request()
+
+	authorizationHeader := request.Header.Get("Authorization")
+	if !strings.Contains(authorizationHeader, "Bearer") {
+		return echo.NewHTTPError(http.StatusBadRequest, "err")
+	}
+
+	tokenString := strings.Replace(authorizationHeader, "Bearer ", "", -1)
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if method, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Signing method invalid")
+		} else if method != jwt.SigningMethodHS256 {
+			return nil, fmt.Errorf("Signing method invalid")
+		}
+		return []byte(config.JWTSecret), nil
+	})
+	if err != nil {
+		log.Println("err: ",err)
+		return echo.NewHTTPError(http.StatusBadRequest, "invalid token")
+	}
+
+	claims , ok := token.Claims.(jwt.MapClaims)
+	if !ok || !token.Valid {
+		return echo.NewHTTPError(http.StatusBadRequest, "invalid token")
+	}
+
+	params["id"]= fmt.Sprintf("%g", claims["id"])
+	log.Println("params: ",params)
+
+	status := models.UpdateUser(params)
+	return echo.NewHTTPError(status)
 }
